@@ -1,0 +1,22 @@
+version: "2"
+services:
+  db:
+    image: mongo
+    restart: always
+    volumes:
+      - 'db:/data/db'
+
+  api:
+    build: .
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - 9000:4000
+    links:
+      - db
+    depends_on:
+      - db
+
+volumes:
+  db:
